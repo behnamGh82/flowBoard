@@ -92,7 +92,7 @@ export const ProjectDetailsPage = () => {
             justifyContent: 'flex-end',
           }}
         >
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
             <Box
               sx={{
                 width: 56,
@@ -114,7 +114,7 @@ export const ProjectDetailsPage = () => {
                 {project.key} · {project.description}
               </Typography>
             </Box>
-            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+            <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap' }}>
               <Chip label={t(`pages:projectStatus.${project.status}`)} color="default" sx={{ color: '#fff' }} />
               <Chip label={t(`pages:projectPriority.${project.priority}`)} variant="outlined" sx={{ color: '#fff', borderColor: 'rgba(255,255,255,.5)' }} />
               <Chip label={t(`pages:projectVisibility.${project.visibility}`)} variant="outlined" sx={{ color: '#fff', borderColor: 'rgba(255,255,255,.5)' }} />
@@ -174,7 +174,7 @@ export const ProjectDetailsPage = () => {
                 <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1.5 }}>
                   {t('pages:projectFormMembers')}
                 </Typography>
-                <Stack direction="row" spacing={2} alignItems="center">
+                <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
                   <AvatarGroup max={6}>
                     {members.map((member) => (
                       <Avatar key={member._id} src={member.avatar}>

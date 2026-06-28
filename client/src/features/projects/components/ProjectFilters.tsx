@@ -40,7 +40,7 @@ export const ProjectFilters = ({
         fullWidth
       />
 
-      <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems={{ md: 'center' }}>
+      <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ alignItems: { md: 'center' } }}>
         <AppInput
           select
           label={t('projectFilterStatus')}

@@ -33,7 +33,7 @@ export const ProjectTableView = ({
       id: 'name',
       label: t('projectFormName'),
       render: (row) => (
-        <Stack direction="row" spacing={1.5} alignItems="center">
+        <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
           <Box
             sx={{
               width: 32,
@@ -102,7 +102,7 @@ export const ProjectTableView = ({
       label: t('projectActions'),
       align: 'right',
       render: (row) => (
-        <Stack direction="row" spacing={0.5} justifyContent="flex-end">
+        <Stack direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end' }}>
           <IconButton size="small" onClick={() => navigate(`/projects/${row._id}`)}>
             <EditOutlinedIcon fontSize="small" />
           </IconButton>

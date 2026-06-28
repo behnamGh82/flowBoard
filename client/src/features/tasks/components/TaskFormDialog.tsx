@@ -46,7 +46,7 @@ export const TaskFormDialog = ({
       description: '',
       status: COLUMN_TO_STATUS[columnId] ?? 'backlog',
       priority: 'medium',
-      storyPoints: undefined,
+      storyPoints: '',
       board: boardId,
       project: projectId,
       columnId,
@@ -135,7 +135,7 @@ export const TaskFormDialog = ({
           label={t('pages:taskFormStoryPoints')}
           type="number"
           margin="normal"
-          inputProps={{ min: 0 }}
+          slotProps={{ htmlInput: { min: 0 } }}
         />
 
         <AppInput
@@ -150,7 +150,7 @@ export const TaskFormDialog = ({
           label={t('pages:taskFormDueDate')}
           type="date"
           margin="normal"
-          InputLabelProps={{ shrink: true }}
+          slotProps={{ inputLabel: { shrink: true } }}
         />
       </Box>
     </AppDialog>

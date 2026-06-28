@@ -35,7 +35,7 @@ export const MemberAutocomplete = ({ control, seedMembers = [] }: MemberAutocomp
           .filter((user): user is User => Boolean(user))
 
         return (
-          <Autocomplete
+          <Autocomplete<User, true, false, false>
             multiple
             options={options}
             value={selectedUsers}
@@ -44,32 +44,38 @@ export const MemberAutocomplete = ({ control, seedMembers = [] }: MemberAutocomp
             onInputChange={(_, value) => setSearch(value)}
             getOptionLabel={(option) => option.name}
             isOptionEqualToValue={(option, value) => option._id === value._id}
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => (
-                <Chip
-                  {...getTagProps({ index })}
-                  key={option._id}
-                  avatar={
-                    <Avatar src={option.avatar} sx={{ width: 24, height: 24 }}>
-                      {getInitials(option.name)}
-                    </Avatar>
-                  }
-                  label={option.name}
-                  size="small"
-                />
-              ))
+            renderValue={(value, getItemProps) =>
+              value.map((option, index) => {
+                const { key, ...itemProps } = getItemProps({ index })
+                return (
+                  <Chip
+                    {...itemProps}
+                    key={key}
+                    avatar={
+                      <Avatar src={option.avatar} sx={{ width: 24, height: 24 }}>
+                        {getInitials(option.name)}
+                      </Avatar>
+                    }
+                    label={option.name}
+                    size="small"
+                  />
+                )
+              })
             }
-            renderOption={(props, option) => (
-              <Box component="li" {...props} key={option._id} sx={{ display: 'flex', gap: 1.5 }}>
-                <Avatar src={option.avatar} sx={{ width: 28, height: 28 }}>
-                  {getInitials(option.name)}
-                </Avatar>
-                <Box>
-                  <Box>{option.name}</Box>
-                  <Box sx={{ fontSize: 12, color: 'text.secondary' }}>{option.email}</Box>
+            renderOption={(props, option) => {
+              const { key, ...optionProps } = props
+              return (
+                <Box component="li" key={key} {...optionProps} sx={{ display: 'flex', gap: 1.5 }}>
+                  <Avatar src={option.avatar} sx={{ width: 28, height: 28 }}>
+                    {getInitials(option.name)}
+                  </Avatar>
+                  <Box>
+                    <Box>{option.name}</Box>
+                    <Box sx={{ fontSize: 12, color: 'text.secondary' }}>{option.email}</Box>
+                  </Box>
                 </Box>
-              </Box>
-            )}
+              )
+            }}
             renderInput={(params) => (
               <TextField {...params} label={t('projectFormMembers')} margin="normal" />
             )}

@@ -16,10 +16,10 @@ export const createProjectSchema = (t: TFunction<'validation'>) =>
     icon: z.string().optional(),
     startDate: z.string().optional(),
     deadline: z.string().optional(),
-    visibility: z.enum(PROJECT_VISIBILITIES as [ProjectVisibility, ...ProjectVisibility[]]),
-    priority: z.enum(PROJECT_PRIORITIES as [ProjectPriority, ...ProjectPriority[]]),
-    status: z.enum(FORM_PROJECT_STATUSES),
-    members: z.array(z.string()).default([]),
+    visibility: z.enum([...PROJECT_VISIBILITIES]),
+    priority: z.enum([...PROJECT_PRIORITIES]),
+    status: z.enum([...FORM_PROJECT_STATUSES]),
+    members: z.array(z.string()),
     coverImage: z.string().optional(),
   })
 

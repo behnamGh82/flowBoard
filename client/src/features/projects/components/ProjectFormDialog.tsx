@@ -83,9 +83,9 @@ export const ProjectFormDialog = ({
   useEffect(() => {
     if (!open) return
     reset(isEdit && project ? projectToFormValues(project) : defaultValues)
-    createProject.reset()
-    updateProject.reset()
-  }, [open, isEdit, project, reset, createProject, updateProject])
+    // Only re-sync when the dialog opens or the target project changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, project?._id, isEdit])
 
   const handleClose = () => {
     reset(defaultValues)
@@ -122,7 +122,10 @@ export const ProjectFormDialog = ({
     reader.readAsDataURL(file)
   }
 
-  const seedMembers = project ? resolveProjectMembers(project.members) : []
+  const seedMembers = useMemo(
+    () => (project ? resolveProjectMembers(project.members) : []),
+    [project],
+  )
 
   return (
     <AppDialog
@@ -220,7 +223,7 @@ export const ProjectFormDialog = ({
             label={t('pages:projectFormStartDate')}
             type="date"
             margin="normal"
-            InputLabelProps={{ shrink: true }}
+            slotProps={{ inputLabel: { shrink: true } }}
             fullWidth
           />
           <AppInput
@@ -228,7 +231,7 @@ export const ProjectFormDialog = ({
             label={t('pages:projectFormDeadline')}
             type="date"
             margin="normal"
-            InputLabelProps={{ shrink: true }}
+            slotProps={{ inputLabel: { shrink: true } }}
             fullWidth
           />
         </Stack>
@@ -239,7 +242,7 @@ export const ProjectFormDialog = ({
           render={({ field }) => (
             <Stack spacing={1} sx={{ mt: 2 }}>
               <Typography variant="subtitle2">{t('pages:projectFormColor')}</Typography>
-              <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+              <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }} useFlexGap>
                 {PROJECT_COLOR_PRESETS.map((color) => (
                   <Box
                     key={color}
@@ -266,7 +269,7 @@ export const ProjectFormDialog = ({
           render={({ field }) => (
             <Stack spacing={1} sx={{ mt: 2 }}>
               <Typography variant="subtitle2">{t('pages:projectFormIcon')}</Typography>
-              <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+              <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }} useFlexGap>
                 {PROJECT_ICON_PRESETS.map((icon) => (
                   <Box
                     key={icon}
@@ -296,7 +299,7 @@ export const ProjectFormDialog = ({
 
         <Stack spacing={1} sx={{ mt: 2 }}>
           <Typography variant="subtitle2">{t('pages:projectFormCover')}</Typography>
-          <AppInput type="file" inputProps={{ accept: 'image/*' }} onChange={handleCoverChange} />
+          <AppInput type="file" slotProps={{ htmlInput: { accept: 'image/*' } }} onChange={handleCoverChange} />
           {watch('coverImage') && (
             <Box
               component="img"

@@ -109,7 +109,7 @@ export const ProjectCard = ({
           </Typography>
         )}
 
-        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+        <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap' }}>
           <Chip
             label={t(`projectStatus.${project.status}`)}
             size="small"
@@ -136,7 +136,7 @@ export const ProjectCard = ({
           </Typography>
         </Box>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
           <AvatarGroup max={4} sx={{ '& .MuiAvatar-root': { width: 28, height: 28, fontSize: 12 } }}>
             {members.map((member) => (
               <Avatar key={member._id} src={member.avatar} alt={member.name}>

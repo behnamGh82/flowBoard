@@ -9,13 +9,7 @@ export const createTaskSchema = (t: TFunction<'validation'>) =>
     description: z.string().optional(),
     status: z.enum(TASK_STATUSES as [TaskStatus, ...TaskStatus[]]),
     priority: z.enum(TASK_PRIORITIES as [TaskPriority, ...TaskPriority[]]),
-    storyPoints: z.preprocess(
-      (val) =>
-        val === '' || val === null || val === undefined || Number.isNaN(Number(val))
-          ? undefined
-          : Number(val),
-      z.number().min(0).optional(),
-    ),
+    storyPoints: z.string().optional(),
     board: z.string().min(1),
     project: z.string().min(1),
     columnId: z.string().min(1),
@@ -39,7 +33,7 @@ export const toTaskPayload = (values: TaskFormValues) => ({
   description: values.description,
   status: values.status,
   priority: values.priority,
-  storyPoints: values.storyPoints,
+  storyPoints: values.storyPoints ? Number(values.storyPoints) : undefined,
   board: values.board,
   project: values.project,
   columnId: values.columnId,
