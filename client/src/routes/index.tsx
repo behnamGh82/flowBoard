@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react'
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { MainLayout } from '@/layouts/MainLayout'
 import { AuthLayout } from '@/layouts/AuthLayout'
-import { ProtectedRoute, PublicRoute, SuspenseFallback } from '@/routes/ProtectedRoute'
+import { ProtectedRoute, PublicRoute, AdminRoute, SuspenseFallback } from '@/routes/ProtectedRoute'
 import { routePermissions } from '@/routes/roles'
 
 const DashboardPage = lazy(() =>
@@ -16,6 +16,18 @@ const BoardsPage = lazy(() =>
 )
 const TasksPage = lazy(() =>
   import('@/pages/TasksPage').then((m) => ({ default: m.TasksPage })),
+)
+const CommentsPage = lazy(() =>
+  import('@/pages/CommentsPage').then((m) => ({ default: m.CommentsPage })),
+)
+const CalendarPage = lazy(() =>
+  import('@/pages/CalendarPage').then((m) => ({ default: m.CalendarPage })),
+)
+const ActivityTimelinePage = lazy(() =>
+  import('@/pages/ActivityTimelinePage').then((m) => ({ default: m.ActivityTimelinePage })),
+)
+const ReportsPage = lazy(() =>
+  import('@/pages/ReportsPage').then((m) => ({ default: m.ReportsPage })),
 )
 const UsersPage = lazy(() =>
   import('@/pages/UsersPage').then((m) => ({ default: m.UsersPage })),
@@ -81,20 +93,48 @@ export const router = createBrowserRouter([
             ),
           },
           {
+            path: 'comments',
+            element: (
+              <ProtectedRoute allowedRoles={routePermissions.delivery}>
+                {withSuspense(<CommentsPage />)}
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: 'calendar',
+            element: (
+              <ProtectedRoute allowedRoles={routePermissions.delivery}>
+                {withSuspense(<CalendarPage />)}
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: 'activity',
+            element: (
+              <ProtectedRoute allowedRoles={routePermissions.delivery}>
+                {withSuspense(<ActivityTimelinePage />)}
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: 'reports',
+            element: (
+              <ProtectedRoute allowedRoles={routePermissions.management}>
+                {withSuspense(<ReportsPage />)}
+              </ProtectedRoute>
+            ),
+          },
+          {
             path: 'users',
             element: (
-              <ProtectedRoute allowedRoles={routePermissions.adminOnly}>
-                {withSuspense(<UsersPage />)}
-              </ProtectedRoute>
+              <AdminRoute>{withSuspense(<UsersPage />)}</AdminRoute>
             ),
           },
           { path: 'notifications', element: withSuspense(<NotificationsPage />) },
           {
             path: 'settings',
             element: (
-              <ProtectedRoute allowedRoles={routePermissions.adminOnly}>
-                {withSuspense(<SettingsPage />)}
-              </ProtectedRoute>
+              <AdminRoute>{withSuspense(<SettingsPage />)}</AdminRoute>
             ),
           },
           { path: 'unauthorized', element: withSuspense(<UnauthorizedPage />) },

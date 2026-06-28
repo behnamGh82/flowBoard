@@ -3,8 +3,15 @@ import { commentService } from '@/features/comments/services/comment.service'
 
 export const commentKeys = {
   all: ['comments'] as const,
+  list: () => [...commentKeys.all, 'list'] as const,
   byTask: (taskId: string) => [...commentKeys.all, 'task', taskId] as const,
 }
+
+export const useComments = () =>
+  useQuery({
+    queryKey: commentKeys.list(),
+    queryFn: commentService.getAll,
+  })
 
 export const useCommentsByTask = (taskId: string) =>
   useQuery({

@@ -28,16 +28,28 @@ export const KanbanBoard = ({ board, tasks, onTaskMove }: KanbanBoardProps) => {
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
   )
 
+  const columnIds = useMemo(() => new Set(board.columns.map((c) => c.id)), [board.columns])
+
   const tasksByColumn = useMemo(() => {
     const map = new Map<string, Task[]>()
     board.columns.forEach((col) => map.set(col.id, []))
     tasks.forEach((task) => {
-      const list = map.get(task.columnId) ?? []
+      const columnId = map.has(task.columnId) ? task.columnId : 'backlog'
+      const list = map.get(columnId) ?? []
       list.push(task)
-      map.set(task.columnId, list.sort((a, b) => a.order - b.order))
+      map.set(columnId, list)
+    })
+    map.forEach((list, key) => {
+      map.set(key, list.sort((a, b) => a.order - b.order))
     })
     return map
   }, [board.columns, tasks])
+
+  const resolveColumnId = (overId: string): string | null => {
+    if (columnIds.has(overId)) return overId
+    const overTask = tasks.find((t) => t._id === overId)
+    return overTask?.columnId ?? null
+  }
 
   const handleDragStart = (event: DragStartEvent) => {
     const task = tasks.find((t) => t._id === event.active.id)
@@ -49,8 +61,10 @@ export const KanbanBoard = ({ board, tasks, onTaskMove }: KanbanBoardProps) => {
     const { active, over } = event
     if (!over) return
 
-    const taskId = active.id as string
-    const columnId = over.id as string
+    const columnId = resolveColumnId(String(over.id))
+    if (!columnId) return
+
+    const taskId = String(active.id)
     const columnTasks = tasksByColumn.get(columnId) ?? []
     onTaskMove?.(taskId, columnId, columnTasks.length)
   }
@@ -68,7 +82,7 @@ export const KanbanBoard = ({ board, tasks, onTaskMove }: KanbanBoardProps) => {
           gap: 2,
           overflowX: 'auto',
           pb: 2,
-          minHeight: 480,
+          minHeight: 520,
         }}
       >
         {board.columns

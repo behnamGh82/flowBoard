@@ -1,6 +1,8 @@
 import { Task } from '../models'
 import { AppError } from '../middleware/error.middleware'
 import { paginate, paginatedResponse } from '../utils/helpers'
+import { COLUMN_TO_STATUS } from '../constants/board'
+import { activityService } from './activity.service'
 
 export const taskService = {
   getAll: async (params: { board?: string; project?: string; page?: number; limit?: number }) => {
@@ -34,22 +36,56 @@ export const taskService = {
   },
 
   create: async (userId: string, payload: Record<string, unknown>) => {
-    return Task.create({ ...payload, reporter: userId })
-  },
+    const task = await Task.create({ ...payload, reporter: userId })
 
-  update: async (id: string, payload: Record<string, unknown>) => {
-    const task = await Task.findByIdAndUpdate(id, payload, { new: true, runValidators: true })
-    if (!task) throw new AppError('Task not found', 404)
+    await activityService.record({
+      action: 'task_created',
+      actor: userId,
+      project: task.project.toString(),
+      task: task._id.toString(),
+      message: `Task "${task.title}" was created`,
+    })
+
     return task
   },
 
-  move: async (id: string, columnId: string, order: number) => {
+  update: async (id: string, payload: Record<string, unknown>, actorId?: string) => {
+    const task = await Task.findByIdAndUpdate(id, payload, { new: true, runValidators: true })
+    if (!task) throw new AppError('Task not found', 404)
+
+    if (actorId) {
+      await activityService.record({
+        action: 'task_updated',
+        actor: actorId,
+        project: task.project.toString(),
+        task: task._id.toString(),
+        message: `Task "${task.title}" was updated`,
+      })
+    }
+
+    return task
+  },
+
+  move: async (id: string, columnId: string, order: number, actorId?: string) => {
+    const status = COLUMN_TO_STATUS[columnId] ?? 'todo'
     const task = await Task.findByIdAndUpdate(
       id,
-      { columnId, order, status: columnId === 'done' ? 'done' : columnId },
+      { columnId, order, status },
       { new: true },
     )
     if (!task) throw new AppError('Task not found', 404)
+
+    if (actorId) {
+      await activityService.record({
+        action: 'task_moved',
+        actor: actorId,
+        project: task.project.toString(),
+        task: task._id.toString(),
+        message: `Task "${task.title}" was moved to ${columnId}`,
+        metadata: { columnId, order },
+      })
+    }
+
     return task
   },
 

@@ -1,0 +1,12 @@
+{
+  "recentActivity": "Recent Activity",
+  "filters": "Filters",
+  "allActivity": "All activity",
+  "projectCreated": "Project created",
+  "taskCreated": "Task created",
+  "taskUpdated": "Task updated",
+  "taskMoved": "Task moved",
+  "commentAdded": "Comment added",
+  "userJoined": "User joined",
+  "unknownActor": "Unknown user"
+}

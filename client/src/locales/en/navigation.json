@@ -1,9 +1,17 @@
 {
+  "sections": {
+    "workspace": "Workspace",
+    "management": "Management"
+  },
   "dashboard": "Dashboard",
   "projects": "Projects",
   "boards": "Boards",
   "tasks": "Tasks",
+  "comments": "Comments",
   "users": "Users",
   "notifications": "Notifications",
+  "calendar": "Calendar",
+  "activityTimeline": "Activity Timeline",
+  "reports": "Reports",
   "settings": "Settings"
 }

@@ -45,7 +45,31 @@ export interface Board {
 }
 
 export type TaskPriority = 'lowest' | 'low' | 'medium' | 'high' | 'highest'
-export type TaskStatus = 'todo' | 'in_progress' | 'in_review' | 'done'
+export type TaskStatus = 'backlog' | 'todo' | 'in_progress' | 'in_review' | 'done'
+
+export interface TaskAttachment {
+  _id: string
+  filename: string
+  url: string
+  size: number
+  uploadedBy: User | string
+  createdAt: string
+}
+
+export interface TaskChecklistItem {
+  id: string
+  text: string
+  done: boolean
+  order: number
+}
+
+export interface TaskActivityLogEntry {
+  _id: string
+  action: string
+  actor: User | string
+  message: string
+  createdAt: string
+}
 
 export interface Task {
   _id: string
@@ -53,6 +77,7 @@ export interface Task {
   description?: string
   status: TaskStatus
   priority: TaskPriority
+  storyPoints?: number
   board: Board | string
   project: Project | string
   columnId: string
@@ -61,6 +86,10 @@ export interface Task {
   reporter: User | string
   labels: string[]
   dueDate?: string
+  attachments: TaskAttachment[]
+  checklist: TaskChecklistItem[]
+  comments?: Comment[]
+  activityLog?: TaskActivityLogEntry[]
   createdAt: string
   updatedAt: string
 }
@@ -72,6 +101,41 @@ export interface Comment {
   author: User | string
   createdAt: string
   updatedAt: string
+}
+
+export type CalendarEventType = 'task_due' | 'project_milestone' | 'meeting'
+
+export interface CalendarEvent {
+  _id: string
+  title: string
+  description?: string
+  start: string
+  end?: string
+  type: CalendarEventType
+  project?: Project | string
+  task?: Task | string
+  createdAt: string
+  updatedAt: string
+}
+
+export type ActivityAction =
+  | 'project_created'
+  | 'task_created'
+  | 'task_updated'
+  | 'task_moved'
+  | 'comment_added'
+  | 'user_joined'
+
+export interface ActivityTimelineItem {
+  _id: string
+  action: ActivityAction
+  actor: User | string
+  project?: Project | string
+  task?: Task | string
+  comment?: Comment | string
+  message: string
+  metadata?: Record<string, unknown>
+  createdAt: string
 }
 
 export type NotificationType =
@@ -102,6 +166,11 @@ export interface ApiResponse<T> {
   success: boolean
   data: T
   message?: string
+}
+
+export interface ApiError {
+  message: string
+  status?: number
 }
 
 export interface AuthTokens {

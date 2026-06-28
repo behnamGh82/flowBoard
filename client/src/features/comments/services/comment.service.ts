@@ -2,6 +2,11 @@ import { apiClient } from '@/api/client'
 import type { ApiResponse, Comment } from '@/types'
 
 export const commentService = {
+  getAll: async () => {
+    const { data } = await apiClient.get<ApiResponse<Comment[]>>('/comments')
+    return data.data
+  },
+
   getByTask: async (taskId: string) => {
     const { data } = await apiClient.get<ApiResponse<Comment[]>>(`/comments/task/${taskId}`)
     return data.data

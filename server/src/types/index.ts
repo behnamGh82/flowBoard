@@ -12,7 +12,31 @@ export interface AuthRequest extends Request {
 export type UserRole = 'admin' | 'project_manager' | 'developer'
 export type ProjectStatus = 'active' | 'archived' | 'on_hold'
 export type TaskPriority = 'lowest' | 'low' | 'medium' | 'high' | 'highest'
-export type TaskStatus = 'todo' | 'in_progress' | 'in_review' | 'done'
+export type TaskStatus = 'backlog' | 'todo' | 'in_progress' | 'in_review' | 'done'
+
+export interface ITaskAttachment {
+  _id: Types.ObjectId
+  filename: string
+  url: string
+  size: number
+  uploadedBy: Types.ObjectId
+  createdAt: Date
+}
+
+export interface ITaskChecklistItem {
+  id: string
+  text: string
+  done: boolean
+  order: number
+}
+export type CalendarEventType = 'task_due' | 'project_milestone' | 'meeting'
+export type ActivityAction =
+  | 'project_created'
+  | 'task_created'
+  | 'task_updated'
+  | 'task_moved'
+  | 'comment_added'
+  | 'user_joined'
 export type NotificationType =
   | 'task_assigned'
   | 'task_updated'
@@ -67,6 +91,7 @@ export interface ITask extends Document {
   description?: string
   status: TaskStatus
   priority: TaskPriority
+  storyPoints?: number
   board: Types.ObjectId
   project: Types.ObjectId
   columnId: string
@@ -75,6 +100,8 @@ export interface ITask extends Document {
   reporter: Types.ObjectId
   labels: string[]
   dueDate?: Date
+  attachments: ITaskAttachment[]
+  checklist: ITaskChecklistItem[]
   createdAt: Date
   updatedAt: Date
 }
@@ -94,6 +121,18 @@ export interface INotification extends Document {
   message: string
   read: boolean
   recipient: Types.ObjectId
+  metadata?: Record<string, unknown>
+  createdAt: Date
+}
+
+export interface IActivity extends Document {
+  _id: Types.ObjectId
+  action: ActivityAction
+  actor: Types.ObjectId
+  project?: Types.ObjectId
+  task?: Types.ObjectId
+  comment?: Types.ObjectId
+  message: string
   metadata?: Record<string, unknown>
   createdAt: Date
 }

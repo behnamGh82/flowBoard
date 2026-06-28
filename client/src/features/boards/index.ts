@@ -1,4 +1,5 @@
 export { KanbanBoard } from './components/KanbanBoard'
 export { KanbanColumn } from './components/KanbanColumn'
+export { BoardWorkspace } from './components/BoardWorkspace'
 export { useBoardsByProject, useBoard, useCreateBoard } from './hooks/useBoards'
 export { boardService } from './services/board.service'

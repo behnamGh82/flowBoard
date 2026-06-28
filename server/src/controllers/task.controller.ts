@@ -49,7 +49,7 @@ export const taskController = {
 
   update: async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      const task = await taskService.update(getParam(req.params.id), req.body)
+      const task = await taskService.update(getParam(req.params.id), req.body, req.user!.id)
       sendSuccess(res, task)
     } catch (error) {
       next(error)
@@ -59,7 +59,7 @@ export const taskController = {
   move: async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       const { columnId, order } = req.body
-      const task = await taskService.move(getParam(req.params.id), columnId, order)
+      const task = await taskService.move(getParam(req.params.id), columnId, order, req.user!.id)
       sendSuccess(res, task)
     } catch (error) {
       next(error)

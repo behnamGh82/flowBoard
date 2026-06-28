@@ -1,9 +1,17 @@
 {
+  "sections": {
+    "workspace": "فضای کاری",
+    "management": "مدیریت"
+  },
   "dashboard": "داشبورد",
   "projects": "پروژه‌ها",
   "boards": "بردها",
   "tasks": "وظایف",
+  "comments": "نظرات",
   "users": "کاربران",
   "notifications": "اعلان‌ها",
+  "calendar": "تقویم",
+  "activityTimeline": "خط زمانی فعالیت‌ها",
+  "reports": "گزارش‌ها",
   "settings": "تنظیمات"
 }

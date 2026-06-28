@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuthStore } from '@/contexts/authStore'
-import { LoadingSpinner } from '@/components/common/LoadingSpinner'
+import { LoadingScreen } from '@/components/ui/LoadingScreen'
 import type { UserRole } from '@/types'
+import { routePermissions } from '@/routes/roles'
 
 interface ProtectedRouteProps {
   children?: React.ReactNode
@@ -32,4 +33,10 @@ export const PublicRoute = ({ children }: ProtectedRouteProps) => {
   return children ?? <Outlet />
 }
 
-export const SuspenseFallback = () => <LoadingSpinner fullScreen />
+export const AdminRoute = ({ children }: ProtectedRouteProps) => (
+  <ProtectedRoute allowedRoles={routePermissions.adminOnly}>
+    {children ?? <Outlet />}
+  </ProtectedRoute>
+)
+
+export const SuspenseFallback = () => <LoadingScreen />

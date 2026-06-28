@@ -5,6 +5,15 @@ import { getParam } from '../utils/params'
 import type { AuthRequest } from '../types'
 
 export const commentController = {
+  getAll: async (req: AuthRequest, res: Response, next: NextFunction) => {
+    try {
+      const comments = await commentService.getAll(req.user!.id)
+      sendSuccess(res, comments)
+    } catch (error) {
+      next(error)
+    }
+  },
+
   getByTask: async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       const comments = await commentService.getByTask(getParam(req.params.taskId))

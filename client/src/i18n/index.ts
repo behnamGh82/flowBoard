@@ -11,6 +11,9 @@ import enValidation from '@/locales/en/validation.json'
 import enPages from '@/locales/en/pages.json'
 import enSettings from '@/locales/en/settings.json'
 import enDashboard from '@/locales/en/dashboard.json'
+import enCalendar from '@/locales/en/calendar.json'
+import enActivity from '@/locales/en/activity.json'
+import enComments from '@/locales/en/comments.json'
 
 import faCommon from '@/locales/fa/common.json'
 import faNavigation from '@/locales/fa/navigation.json'
@@ -20,6 +23,9 @@ import faValidation from '@/locales/fa/validation.json'
 import faPages from '@/locales/fa/pages.json'
 import faSettings from '@/locales/fa/settings.json'
 import faDashboard from '@/locales/fa/dashboard.json'
+import faCalendar from '@/locales/fa/calendar.json'
+import faActivity from '@/locales/fa/activity.json'
+import faComments from '@/locales/fa/comments.json'
 
 export const supportedLanguages: AppLanguage[] = ['en', 'fa']
 
@@ -45,6 +51,9 @@ void i18n.use(initReactI18next).init({
       pages: enPages,
       settings: enSettings,
       dashboard: enDashboard,
+      calendar: enCalendar,
+      activity: enActivity,
+      comments: enComments,
     },
     fa: {
       common: faCommon,
@@ -55,12 +64,27 @@ void i18n.use(initReactI18next).init({
       pages: faPages,
       settings: faSettings,
       dashboard: faDashboard,
+      calendar: faCalendar,
+      activity: faActivity,
+      comments: faComments,
     },
   },
   lng: getInitialLanguage(),
   fallbackLng: 'en',
   defaultNS: 'common',
-  ns: ['common', 'navigation', 'auth', 'roles', 'validation', 'pages', 'settings', 'dashboard'],
+  ns: [
+    'common',
+    'navigation',
+    'auth',
+    'roles',
+    'validation',
+    'pages',
+    'settings',
+    'dashboard',
+    'calendar',
+    'activity',
+    'comments',
+  ],
   interpolation: {
     escapeValue: false,
   },

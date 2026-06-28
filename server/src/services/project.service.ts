@@ -1,6 +1,7 @@
 import { Project } from '../models'
 import { AppError } from '../middleware/error.middleware'
 import { paginate, paginatedResponse } from '../utils/helpers'
+import { activityService } from './activity.service'
 import type { AuthRequest } from '../types'
 
 export const projectService = {
@@ -41,11 +42,20 @@ export const projectService = {
     const existing = await Project.findOne({ key: payload.key })
     if (existing) throw new AppError('Project key already exists', 409)
 
-    return Project.create({
+    const project = await Project.create({
       ...payload,
       owner: userId,
       members: [userId],
     })
+
+    await activityService.record({
+      action: 'project_created',
+      actor: userId,
+      project: project._id.toString(),
+      message: `Project "${project.name}" was created`,
+    })
+
+    return project
   },
 
   update: async (id: string, userId: string, payload: Partial<{ name: string; description: string; status: string; color: string }>) => {

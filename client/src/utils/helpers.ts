@@ -9,9 +9,10 @@ export const priorityColors: Record<TaskPriority, string> = {
 }
 
 export const statusLabels: Record<TaskStatus, string> = {
-  todo: 'To Do',
+  backlog: 'Backlog',
+  todo: 'Todo',
   in_progress: 'In Progress',
-  in_review: 'In Review',
+  in_review: 'Review',
   done: 'Done',
 }
 
@@ -25,3 +26,6 @@ export const getInitials = (name: string) =>
 
 export const truncate = (text: string, maxLength: number) =>
   text.length > maxLength ? `${text.slice(0, maxLength)}…` : text
+
+export const getUserName = (user: { name: string } | string | undefined) =>
+  typeof user === 'object' && user ? user.name : undefined

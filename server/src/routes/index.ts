@@ -6,6 +6,8 @@ import taskRoutes from './task.routes'
 import commentRoutes from './comment.routes'
 import userRoutes from './user.routes'
 import notificationRoutes from './notification.routes'
+import calendarRoutes from './calendar.routes'
+import activityRoutes from './activity.routes'
 
 const router = Router()
 
@@ -20,5 +22,7 @@ router.use('/tasks', taskRoutes)
 router.use('/comments', commentRoutes)
 router.use('/users', userRoutes)
 router.use('/notifications', notificationRoutes)
+router.use('/calendar', calendarRoutes)
+router.use('/activity', activityRoutes)
 
 export default router

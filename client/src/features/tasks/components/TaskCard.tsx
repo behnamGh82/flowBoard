@@ -38,10 +38,23 @@ export const TaskCard = ({ task, isDragging = false }: TaskCardProps) => {
           <Chip
             label={task.priority}
             size="small"
-            sx={{ bgcolor: `${priorityColors[task.priority]}20`, color: priorityColors[task.priority] }}
+            sx={{
+              bgcolor: `${priorityColors[task.priority]}20`,
+              color: priorityColors[task.priority],
+            }}
           />
           <Chip label={statusLabels[task.status]} size="small" variant="outlined" />
+          {task.storyPoints != null && (
+            <Chip label={`${task.storyPoints} SP`} size="small" variant="outlined" />
+          )}
         </Box>
+        {task.labels?.length > 0 && (
+          <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', mt: 1 }}>
+            {task.labels.slice(0, 3).map((label) => (
+              <Chip key={label} label={label} size="small" />
+            ))}
+          </Box>
+        )}
         {task.dueDate && (
           <Typography
             variant="caption"
