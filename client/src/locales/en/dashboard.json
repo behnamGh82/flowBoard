@@ -1,0 +1,15 @@
+{
+  "activeProjects": "Active Projects",
+  "openTasks": "Open Tasks",
+  "teamMembers": "Team Members",
+  "completed": "Completed",
+  "taskOverview": "Task Overview",
+  "recentActivity": "Recent Activity",
+  "todo": "To Do",
+  "inProgress": "In Progress",
+  "done": "Done",
+  "activityMovedTask": "{{user}} moved task \"{{task}}\" to Done",
+  "activityCommented": "{{user}} commented on \"{{task}}\"",
+  "activityCreatedProject": "{{user}} created project \"{{project}}\"",
+  "activityAssignedTask": "{{user}} assigned \"{{task}}\" to {{assignee}}"
+}

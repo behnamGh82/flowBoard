@@ -1,17 +1,21 @@
+import { useMemo } from 'react'
 import { Alert, Box, Button, Link as MuiLink, TextField, Typography } from '@mui/material'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
-  resetPasswordSchema,
+  createResetPasswordSchema,
   type ResetPasswordFormValues,
 } from '@/features/auth/schemas/auth.schema'
 import { useResetPassword } from '@/features/auth/hooks/useAuth'
 
 export const ResetPasswordForm = () => {
+  const { t } = useTranslation(['auth', 'validation'])
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const resetPassword = useResetPassword()
+  const resetPasswordSchema = useMemo(() => createResetPasswordSchema(t), [t])
 
   const {
     register,
@@ -35,21 +39,21 @@ export const ResetPasswordForm = () => {
   return (
     <Box component="form" onSubmit={onSubmit} noValidate>
       <Typography variant="h5" sx={{ fontWeight: 700 }} gutterBottom>
-        Reset password
+        {t('auth:resetPasswordTitle')}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Choose a new password for your account.
+        {t('auth:resetPasswordDescription')}
       </Typography>
 
       {resetPassword.isError && (
         <Alert severity="error" sx={{ mb: 2 }}>
-          Invalid or expired reset token.
+          {t('auth:resetTokenInvalid')}
         </Alert>
       )}
 
       <TextField
         {...register('token')}
-        label="Reset token"
+        label={t('auth:resetToken')}
         fullWidth
         margin="normal"
         error={!!errors.token}
@@ -57,7 +61,7 @@ export const ResetPasswordForm = () => {
       />
       <TextField
         {...register('password')}
-        label="New password"
+        label={t('auth:newPassword')}
         type="password"
         fullWidth
         margin="normal"
@@ -66,7 +70,7 @@ export const ResetPasswordForm = () => {
       />
       <TextField
         {...register('confirmPassword')}
-        label="Confirm password"
+        label={t('auth:confirmPassword')}
         type="password"
         fullWidth
         margin="normal"
@@ -82,12 +86,12 @@ export const ResetPasswordForm = () => {
         sx={{ mt: 3 }}
         loading={resetPassword.isPending}
       >
-        Update password
+        {t('auth:updatePassword')}
       </Button>
 
       <Typography variant="body2" align="center" sx={{ mt: 2 }}>
         <MuiLink component={Link} to="/login">
-          Back to sign in
+          {t('auth:backToSignIn')}
         </MuiLink>
       </Typography>
     </Box>

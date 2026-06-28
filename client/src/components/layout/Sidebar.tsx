@@ -17,6 +17,7 @@ import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined'
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined'
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import { NavLink, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '@/contexts/authStore'
 import { routePermissions } from '@/routes/roles'
 import type { UserRole } from '@/types'
@@ -24,21 +25,22 @@ import type { UserRole } from '@/types'
 const DRAWER_WIDTH = 260
 
 const navItems: Array<{
-  label: string
+  labelKey: string
   path: string
   icon: typeof DashboardOutlinedIcon
   allowedRoles?: UserRole[]
 }> = [
-  { label: 'Dashboard', path: '/dashboard', icon: DashboardOutlinedIcon },
-  { label: 'Projects', path: '/projects', icon: FolderOutlinedIcon, allowedRoles: routePermissions.management },
-  { label: 'Boards', path: '/boards', icon: ViewKanbanOutlinedIcon, allowedRoles: routePermissions.delivery },
-  { label: 'Tasks', path: '/tasks', icon: TaskAltOutlinedIcon, allowedRoles: routePermissions.delivery },
-  { label: 'Users', path: '/users', icon: PeopleOutlinedIcon, allowedRoles: routePermissions.adminOnly },
-  { label: 'Notifications', path: '/notifications', icon: NotificationsOutlinedIcon },
-  { label: 'Settings', path: '/settings', icon: SettingsOutlinedIcon, allowedRoles: routePermissions.adminOnly },
+  { labelKey: 'dashboard', path: '/dashboard', icon: DashboardOutlinedIcon },
+  { labelKey: 'projects', path: '/projects', icon: FolderOutlinedIcon, allowedRoles: routePermissions.management },
+  { labelKey: 'boards', path: '/boards', icon: ViewKanbanOutlinedIcon, allowedRoles: routePermissions.delivery },
+  { labelKey: 'tasks', path: '/tasks', icon: TaskAltOutlinedIcon, allowedRoles: routePermissions.delivery },
+  { labelKey: 'users', path: '/users', icon: PeopleOutlinedIcon, allowedRoles: routePermissions.adminOnly },
+  { labelKey: 'notifications', path: '/notifications', icon: NotificationsOutlinedIcon },
+  { labelKey: 'settings', path: '/settings', icon: SettingsOutlinedIcon, allowedRoles: routePermissions.adminOnly },
 ]
 
 export const Sidebar = () => {
+  const { t } = useTranslation(['navigation', 'common'])
   const location = useLocation()
   const hasRole = useAuthStore((state) => state.hasRole)
 
@@ -63,13 +65,13 @@ export const Sidebar = () => {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <ViewKanbanOutlinedIcon color="primary" />
           <Typography variant="h6" sx={{ fontWeight: 700 }} noWrap>
-            FlowBoard
+            {t('common:appName')}
           </Typography>
         </Box>
       </Toolbar>
       <Divider />
       <List sx={{ px: 1, py: 2 }}>
-        {visibleItems.map(({ label, path, icon: Icon }) => {
+        {visibleItems.map(({ labelKey, path, icon: Icon }) => {
           const active = location.pathname.startsWith(path)
           return (
             <ListItemButton
@@ -92,7 +94,7 @@ export const Sidebar = () => {
                 <Icon fontSize="small" />
               </ListItemIcon>
               <ListItemText
-                primary={label}
+                primary={t(`navigation:${labelKey}`)}
                 slotProps={{ primary: { sx: { fontWeight: 500 } } }}
               />
             </ListItemButton>

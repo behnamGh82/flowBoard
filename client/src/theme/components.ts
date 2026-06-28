@@ -65,7 +65,7 @@ export const components: Components<Theme> = {
   MuiDrawer: {
     styleOverrides: {
       paper: ({ theme }) => ({
-        borderRight: `1px solid ${theme.palette.divider}`,
+        borderInlineEnd: `1px solid ${theme.palette.divider}`,
       }),
     },
   },

@@ -1,0 +1,12 @@
+{
+  "invalidEmail": "Invalid email address",
+  "passwordMin": "Password must be at least 6 characters",
+  "nameMin": "Name must be at least 2 characters",
+  "passwordsMismatch": "Passwords do not match",
+  "resetTokenRequired": "Reset token is required",
+  "titleRequired": "Title is required",
+  "projectNameMin": "Name must be at least 2 characters",
+  "projectKeyMin": "Key must be at least 2 characters",
+  "projectKeyMax": "Key must be at most 6 characters",
+  "projectKeyFormat": "Key must be uppercase letters only"
+}

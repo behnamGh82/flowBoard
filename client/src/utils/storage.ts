@@ -1,14 +1,25 @@
-const STORAGE_KEY = 'pm_theme_mode'
+const THEME_KEY = 'pm_theme_mode'
+const LANGUAGE_KEY = 'pm_language'
 
 export const storage = {
   getThemeMode(): 'light' | 'dark' | null {
-    const value = localStorage.getItem(STORAGE_KEY)
+    const value = localStorage.getItem(THEME_KEY)
     if (value === 'light' || value === 'dark') return value
     return null
   },
 
   setThemeMode(mode: 'light' | 'dark') {
-    localStorage.setItem(STORAGE_KEY, mode)
+    localStorage.setItem(THEME_KEY, mode)
+  },
+
+  getLanguage(): 'en' | 'fa' | null {
+    const value = localStorage.getItem(LANGUAGE_KEY)
+    if (value === 'en' || value === 'fa') return value
+    return null
+  },
+
+  setLanguage(language: 'en' | 'fa') {
+    localStorage.setItem(LANGUAGE_KEY, language)
   },
 
   getToken(): string | null {

@@ -1,13 +1,20 @@
+import { useMemo } from 'react'
 import { Box, Button, TextField, Typography, Link as MuiLink, Alert } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, useNavigate } from 'react-router-dom'
-import { loginSchema, type LoginFormValues } from '@/features/auth/schemas/auth.schema'
+import { useTranslation } from 'react-i18next'
+import {
+  createLoginSchema,
+  type LoginFormValues,
+} from '@/features/auth/schemas/auth.schema'
 import { useLogin } from '@/features/auth/hooks/useAuth'
 
 export const LoginForm = () => {
+  const { t } = useTranslation(['auth', 'validation'])
   const navigate = useNavigate()
   const login = useLogin()
+  const loginSchema = useMemo(() => createLoginSchema(t), [t])
 
   const {
     register,
@@ -26,21 +33,21 @@ export const LoginForm = () => {
   return (
     <Box component="form" onSubmit={onSubmit} noValidate>
       <Typography variant="h5" sx={{ fontWeight: 700 }} gutterBottom>
-        Sign in
+        {t('auth:signIn')}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Welcome back. Enter your credentials to continue.
+        {t('auth:signInDescription')}
       </Typography>
 
       {login.isError && (
         <Alert severity="error" sx={{ mb: 2 }}>
-          Invalid email or password
+          {t('auth:invalidCredentials')}
         </Alert>
       )}
 
       <TextField
         {...register('email')}
-        label="Email"
+        label={t('auth:email')}
         type="email"
         fullWidth
         margin="normal"
@@ -49,7 +56,7 @@ export const LoginForm = () => {
       />
       <TextField
         {...register('password')}
-        label="Password"
+        label={t('auth:password')}
         type="password"
         fullWidth
         margin="normal"
@@ -59,7 +66,7 @@ export const LoginForm = () => {
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
         <MuiLink component={Link} to="/forgot-password" variant="body2">
-          Forgot password?
+          {t('auth:forgotPassword')}
         </MuiLink>
       </Box>
 
@@ -71,13 +78,13 @@ export const LoginForm = () => {
         sx={{ mt: 3 }}
         loading={login.isPending}
       >
-        Sign in
+        {t('auth:signIn')}
       </Button>
 
       <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-        Don&apos;t have an account?{' '}
+        {t('auth:noAccount')}{' '}
         <MuiLink component={Link} to="/register">
-          Create one
+          {t('auth:createOne')}
         </MuiLink>
       </Typography>
     </Box>

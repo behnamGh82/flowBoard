@@ -1,15 +1,19 @@
+import { useMemo } from 'react'
 import { Alert, Box, Button, Link as MuiLink, TextField, Typography } from '@mui/material'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
-  forgotPasswordSchema,
+  createForgotPasswordSchema,
   type ForgotPasswordFormValues,
 } from '@/features/auth/schemas/auth.schema'
 import { useForgotPassword } from '@/features/auth/hooks/useAuth'
 
 export const ForgotPasswordForm = () => {
+  const { t } = useTranslation(['auth', 'validation'])
   const forgotPassword = useForgotPassword()
+  const forgotPasswordSchema = useMemo(() => createForgotPasswordSchema(t), [t])
 
   const {
     register,
@@ -27,18 +31,18 @@ export const ForgotPasswordForm = () => {
   return (
     <Box component="form" onSubmit={onSubmit} noValidate>
       <Typography variant="h5" sx={{ fontWeight: 700 }} gutterBottom>
-        Forgot password
+        {t('auth:forgotPasswordTitle')}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Enter your email and we will send password reset instructions.
+        {t('auth:forgotPasswordDescription')}
       </Typography>
 
       {forgotPassword.isSuccess && (
         <Alert severity="success" sx={{ mb: 2 }}>
-          If an account exists for this email, reset instructions have been prepared.
+          {t('auth:resetSuccess')}
           {forgotPassword.data?.resetToken && (
             <Typography variant="caption" sx={{ mt: 1, display: 'block', wordBreak: 'break-all' }}>
-              Development reset token: {forgotPassword.data.resetToken}
+              {t('auth:devResetToken')}: {forgotPassword.data.resetToken}
             </Typography>
           )}
         </Alert>
@@ -46,13 +50,13 @@ export const ForgotPasswordForm = () => {
 
       {forgotPassword.isError && (
         <Alert severity="error" sx={{ mb: 2 }}>
-          Unable to process password reset request.
+          {t('auth:resetRequestFailed')}
         </Alert>
       )}
 
       <TextField
         {...register('email')}
-        label="Email"
+        label={t('auth:email')}
         type="email"
         fullWidth
         margin="normal"
@@ -68,13 +72,13 @@ export const ForgotPasswordForm = () => {
         sx={{ mt: 3 }}
         loading={forgotPassword.isPending}
       >
-        Send reset instructions
+        {t('auth:sendResetInstructions')}
       </Button>
 
       <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-        Remembered your password?{' '}
+        {t('auth:rememberPassword')}{' '}
         <MuiLink component={Link} to="/login">
-          Sign in
+          {t('auth:signIn')}
         </MuiLink>
       </Typography>
     </Box>

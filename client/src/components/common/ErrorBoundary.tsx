@@ -1,8 +1,9 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
 import { Box, Button, Typography } from '@mui/material'
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined'
+import { withTranslation, type WithTranslation } from 'react-i18next'
 
-interface Props {
+interface Props extends WithTranslation {
   children: ReactNode
 }
 
@@ -10,7 +11,7 @@ interface State {
   hasError: boolean
 }
 
-export class ErrorBoundary extends Component<Props, State> {
+class ErrorBoundaryBase extends Component<Props, State> {
   state: State = { hasError: false }
 
   static getDerivedStateFromError(): State {
@@ -22,6 +23,8 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   render() {
+    const { t, children } = this.props
+
     if (this.state.hasError) {
       return (
         <Box
@@ -35,14 +38,16 @@ export class ErrorBoundary extends Component<Props, State> {
           }}
         >
           <ErrorOutlineOutlinedIcon sx={{ fontSize: 48, color: 'error.main' }} />
-          <Typography variant="h6">Something went wrong</Typography>
+          <Typography variant="h6">{t('common:somethingWentWrong')}</Typography>
           <Button variant="contained" onClick={() => window.location.reload()}>
-            Reload page
+            {t('common:reloadPage')}
           </Button>
         </Box>
       )
     }
 
-    return this.props.children
+    return children
   }
 }
+
+export const ErrorBoundary = withTranslation()(ErrorBoundaryBase)

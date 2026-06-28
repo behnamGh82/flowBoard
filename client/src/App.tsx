@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider } from 'react-router-dom'
+import { LocaleProvider } from '@/contexts/LocaleContext'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { ErrorBoundary } from '@/components/common/ErrorBoundary'
 import { AuthInitializer } from '@/features/auth/components/AuthInitializer'
@@ -19,11 +20,13 @@ function App() {
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider>
-          <AuthInitializer>
-            <RouterProvider router={router} />
-          </AuthInitializer>
-        </ThemeProvider>
+        <LocaleProvider>
+          <ThemeProvider>
+            <AuthInitializer>
+              <RouterProvider router={router} />
+            </AuthInitializer>
+          </ThemeProvider>
+        </LocaleProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   )

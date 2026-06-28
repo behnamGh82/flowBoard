@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import {
   Alert,
   Box,
@@ -10,12 +11,18 @@ import {
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, useNavigate } from 'react-router-dom'
-import { registerSchema, type RegisterFormValues } from '@/features/auth/schemas/auth.schema'
+import { useTranslation } from 'react-i18next'
+import {
+  createRegisterSchema,
+  type RegisterFormValues,
+} from '@/features/auth/schemas/auth.schema'
 import { useRegister } from '@/features/auth/hooks/useAuth'
 
 export const RegisterForm = () => {
+  const { t } = useTranslation(['auth', 'validation', 'roles'])
   const navigate = useNavigate()
   const registerMutation = useRegister()
+  const registerSchema = useMemo(() => createRegisterSchema(t), [t])
 
   const {
     register,
@@ -41,21 +48,21 @@ export const RegisterForm = () => {
   return (
     <Box component="form" onSubmit={onSubmit} noValidate>
       <Typography variant="h5" sx={{ fontWeight: 700 }} gutterBottom>
-        Create account
+        {t('auth:createAccount')}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Get started with your free workspace.
+        {t('auth:createAccountDescription')}
       </Typography>
 
       {registerMutation.isError && (
         <Alert severity="error" sx={{ mb: 2 }}>
-          Registration failed. Email may already be in use.
+          {t('auth:registrationFailed')}
         </Alert>
       )}
 
       <TextField
         {...register('name')}
-        label="Full name"
+        label={t('auth:fullName')}
         fullWidth
         margin="normal"
         error={!!errors.name}
@@ -63,7 +70,7 @@ export const RegisterForm = () => {
       />
       <TextField
         {...register('email')}
-        label="Email"
+        label={t('auth:email')}
         type="email"
         fullWidth
         margin="normal"
@@ -73,19 +80,19 @@ export const RegisterForm = () => {
       <TextField
         {...register('role')}
         select
-        label="Role"
+        label={t('auth:role')}
         fullWidth
         margin="normal"
         error={!!errors.role}
         helperText={errors.role?.message}
       >
-        <MenuItem value="developer">Developer</MenuItem>
-        <MenuItem value="project_manager">Project Manager</MenuItem>
-        <MenuItem value="admin">Admin</MenuItem>
+        <MenuItem value="developer">{t('roles:developer')}</MenuItem>
+        <MenuItem value="project_manager">{t('roles:project_manager')}</MenuItem>
+        <MenuItem value="admin">{t('roles:admin')}</MenuItem>
       </TextField>
       <TextField
         {...register('password')}
-        label="Password"
+        label={t('auth:password')}
         type="password"
         fullWidth
         margin="normal"
@@ -94,7 +101,7 @@ export const RegisterForm = () => {
       />
       <TextField
         {...register('confirmPassword')}
-        label="Confirm password"
+        label={t('auth:confirmPassword')}
         type="password"
         fullWidth
         margin="normal"
@@ -110,13 +117,13 @@ export const RegisterForm = () => {
         sx={{ mt: 3 }}
         loading={registerMutation.isPending}
       >
-        Create account
+        {t('auth:createAccount')}
       </Button>
 
       <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-        Already have an account?{' '}
+        {t('auth:hasAccount')}{' '}
         <MuiLink component={Link} to="/login">
-          Sign in
+          {t('auth:signIn')}
         </MuiLink>
       </Typography>
     </Box>

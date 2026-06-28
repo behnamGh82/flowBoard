@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import { ProjectCard } from '@/features/projects/components/ProjectCard'
 import { EmptyState } from '@/components/common/EmptyState'
 import { LoadingSpinner } from '@/components/common/LoadingSpinner'
@@ -9,14 +10,15 @@ interface ProjectListProps {
 }
 
 export const ProjectList = ({ search }: ProjectListProps) => {
+  const { t } = useTranslation('pages')
   const { data, isLoading, isError } = useProjects({ search })
 
   if (isLoading) return <LoadingSpinner />
   if (isError || !data?.data.length) {
     return (
       <EmptyState
-        title="No projects yet"
-        description="Create your first project to start organizing work."
+        title={t('noProjectsTitle')}
+        description={t('noProjectsDescription')}
       />
     )
   }

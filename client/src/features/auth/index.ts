@@ -11,5 +11,5 @@ export {
   useResetPassword,
 } from './hooks/useAuth'
 export { useHasRole, useUserRole } from './hooks/useRoleAccess'
-export { roleLabels, hasAnyRole } from './utils/roles'
+export { roleKeys } from './utils/roles'
 export { authService } from './services/auth.service'

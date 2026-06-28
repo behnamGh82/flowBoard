@@ -1,0 +1,17 @@
+{
+  "appName": "فلو‌بورد",
+  "appTagline": "مدیریت پروژه، ساده و حرفه‌ای",
+  "search": "جستجو…",
+  "reloadPage": "بارگذاری مجدد صفحه",
+  "somethingWentWrong": "مشکلی پیش آمد",
+  "backToDashboard": "بازگشت به داشبورد",
+  "accessDenied": "دسترسی غیرمجاز",
+  "accessDeniedDescription": "نقش فعلی شما اجازه مشاهده این صفحه را ندارد.",
+  "language": "زبان",
+  "english": "English",
+  "persian": "فارسی",
+  "switchToDark": "تغییر به حالت تاریک",
+  "switchToLight": "تغییر به حالت روشن",
+  "logout": "خروج",
+  "trendFromLastMonth": "+۱۲٪ نسبت به ماه قبل"
+}

@@ -1,13 +1,23 @@
-import { createTheme, type ThemeOptions } from '@mui/material/styles'
+import { createTheme, type Direction, type ThemeOptions } from '@mui/material/styles'
 import { components } from './components'
 import { getPalette } from './palette'
-import type { ThemeMode } from '@/types'
+import type { AppLanguage, ThemeMode } from '@/types'
 
-export const createAppTheme = (mode: ThemeMode) => {
+const getFontFamily = (language: AppLanguage) =>
+  language === 'fa'
+    ? '"Vazirmatn", "Inter", "Roboto", "Helvetica", "Arial", sans-serif'
+    : '"Inter", "Roboto", "Helvetica", "Arial", sans-serif'
+
+export const createAppTheme = (
+  mode: ThemeMode,
+  direction: Direction = 'ltr',
+  language: AppLanguage = 'en',
+) => {
   const themeOptions: ThemeOptions = {
+    direction,
     palette: getPalette(mode),
     typography: {
-      fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+      fontFamily: getFontFamily(language),
       h1: { fontWeight: 700, fontSize: '2rem' },
       h2: { fontWeight: 700, fontSize: '1.5rem' },
       h3: { fontWeight: 600, fontSize: '1.25rem' },

@@ -13,13 +13,16 @@ import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useThemeMode } from '@/contexts/ThemeContext'
 import { useAuthStore } from '@/contexts/authStore'
+import { LanguageSwitcher } from '@/components/common/LanguageSwitcher'
 import { getInitials } from '@/utils/helpers'
-import { roleLabels } from '@/features/auth/utils/roles'
+import { roleKeys } from '@/features/auth/utils/roles'
 
 export const Header = () => {
+  const { t } = useTranslation(['common', 'roles'])
   const { mode, toggleMode } = useThemeMode()
   const { user, logout } = useAuthStore()
   const navigate = useNavigate()
@@ -33,7 +36,9 @@ export const Header = () => {
   return (
     <AppBar position="sticky" elevation={0}>
       <Toolbar sx={{ justifyContent: 'flex-end', gap: 1 }}>
-        <Tooltip title={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}>
+        <LanguageSwitcher />
+
+        <Tooltip title={mode === 'light' ? t('common:switchToDark') : t('common:switchToLight')}>
           <IconButton onClick={toggleMode} color="inherit">
             {mode === 'light' ? <Brightness4Icon /> : <Brightness7Icon />}
           </IconButton>
@@ -59,7 +64,7 @@ export const Header = () => {
                 {user.email}
               </Typography>
               <Typography variant="caption" color="primary.main" sx={{ display: 'block', mt: 0.5 }}>
-                {roleLabels[user.role]}
+                {t(`roles:${roleKeys[user.role]}`)}
               </Typography>
             </Box>
           )}
@@ -69,8 +74,8 @@ export const Header = () => {
               handleLogout()
             }}
           >
-            <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
-            Logout
+            <LogoutIcon fontSize="small" sx={{ me: 1 }} />
+            {t('common:logout')}
           </MenuItem>
         </Menu>
       </Toolbar>

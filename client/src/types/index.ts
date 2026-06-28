@@ -1,4 +1,6 @@
 export type ThemeMode = 'light' | 'dark'
+export type AppLanguage = 'en' | 'fa'
+export type TextDirection = 'ltr' | 'rtl'
 
 export type UserRole = 'admin' | 'project_manager' | 'developer'
 

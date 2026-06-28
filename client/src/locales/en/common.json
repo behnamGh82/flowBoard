@@ -1,0 +1,17 @@
+{
+  "appName": "FlowBoard",
+  "appTagline": "Project management, simplified",
+  "search": "Search…",
+  "reloadPage": "Reload page",
+  "somethingWentWrong": "Something went wrong",
+  "backToDashboard": "Back to dashboard",
+  "accessDenied": "Access denied",
+  "accessDeniedDescription": "Your current role does not have permission to view this page.",
+  "language": "Language",
+  "english": "English",
+  "persian": "Persian",
+  "switchToDark": "Switch to dark mode",
+  "switchToLight": "Switch to light mode",
+  "logout": "Logout",
+  "trendFromLastMonth": "+12% from last month"
+}

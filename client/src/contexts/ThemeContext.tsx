@@ -2,6 +2,7 @@ import { createContext, useContext, useMemo, useState, type ReactNode } from 're
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { createAppTheme } from '@/theme'
+import { useLocale } from '@/contexts/LocaleContext'
 import { storage } from '@/utils/storage'
 import type { ThemeMode } from '@/types'
 
@@ -20,6 +21,7 @@ const getInitialMode = (): ThemeMode => {
 }
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+  const { direction, language } = useLocale()
   const [mode, setModeState] = useState<ThemeMode>(getInitialMode)
 
   const setMode = (next: ThemeMode) => {
@@ -29,7 +31,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   const toggleMode = () => setMode(mode === 'light' ? 'dark' : 'light')
 
-  const theme = useMemo(() => createAppTheme(mode), [mode])
+  const theme = useMemo(
+    () => createAppTheme(mode, direction, language),
+    [mode, direction, language],
+  )
 
   const value = useMemo(
     () => ({ mode, toggleMode, setMode }),

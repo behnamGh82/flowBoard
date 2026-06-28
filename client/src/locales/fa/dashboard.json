@@ -1,0 +1,15 @@
+{
+  "activeProjects": "پروژه‌های فعال",
+  "openTasks": "وظایف باز",
+  "teamMembers": "اعضای تیم",
+  "completed": "تکمیل‌شده",
+  "taskOverview": "نمای کلی وظایف",
+  "recentActivity": "فعالیت‌های اخیر",
+  "todo": "انجام نشده",
+  "inProgress": "در حال انجام",
+  "done": "انجام شده",
+  "activityMovedTask": "{{user}} وظیفه «{{task}}» را به انجام‌شده منتقل کرد",
+  "activityCommented": "{{user}} روی «{{task}}» نظر گذاشت",
+  "activityCreatedProject": "{{user}} پروژه «{{project}}» را ایجاد کرد",
+  "activityAssignedTask": "{{user}} «{{task}}» را به {{assignee}} واگذار کرد"
+}
