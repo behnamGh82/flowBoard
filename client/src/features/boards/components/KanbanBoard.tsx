@@ -19,9 +19,10 @@ interface KanbanBoardProps {
   board: Board
   tasks: Task[]
   onTaskMove?: (taskId: string, columnId: string, order: number) => void
+  onAddTask?: (columnId: string) => void
 }
 
-export const KanbanBoard = ({ board, tasks, onTaskMove }: KanbanBoardProps) => {
+export const KanbanBoard = ({ board, tasks, onTaskMove, onAddTask }: KanbanBoardProps) => {
   const [activeTask, setActiveTask] = useState<Task | null>(null)
 
   const sensors = useSensors(
@@ -92,6 +93,7 @@ export const KanbanBoard = ({ board, tasks, onTaskMove }: KanbanBoardProps) => {
               key={column.id}
               column={column}
               tasks={tasksByColumn.get(column.id) ?? []}
+              onAddTask={onAddTask}
             />
           ))}
       </Box>

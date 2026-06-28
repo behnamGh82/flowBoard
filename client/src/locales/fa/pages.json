@@ -40,5 +40,22 @@
   "reportsEmptyTitle": "گزارش‌ها به‌زودی",
   "reportsEmptyDescription": "سرعت پروژه، نمودار burndown و معیارهای تیم اینجا نمایش داده می‌شوند.",
   "noProjectsTitle": "هنوز پروژه‌ای نیست",
-  "noProjectsDescription": "اولین پروژه خود را بسازید تا کارها را سازمان‌دهی کنید."
+  "noProjectsDescription": "اولین پروژه خود را بسازید تا کارها را سازمان‌دهی کنید.",
+  "projectFormTitle": "ایجاد پروژه",
+  "projectFormName": "نام پروژه",
+  "projectFormKey": "کلید پروژه",
+  "projectFormKeyHint": "۲ تا ۶ حرف بزرگ انگلیسی (مثلاً FLW)",
+  "projectFormDescription": "توضیحات",
+  "projectFormColor": "رنگ",
+  "projectFormSubmit": "ایجاد پروژه",
+  "addTask": "افزودن وظیفه",
+  "taskFormTitle": "وظیفه جدید",
+  "taskFormTitleLabel": "عنوان",
+  "taskFormDescription": "توضیحات",
+  "taskFormPriority": "اولویت",
+  "taskFormStoryPoints": "Story Points",
+  "taskFormLabels": "برچسب‌ها",
+  "taskFormLabelsHint": "با کاما جدا کنید (مثلاً ui, frontend)",
+  "taskFormDueDate": "مهلت",
+  "taskFormSubmit": "ایجاد وظیفه"
 }

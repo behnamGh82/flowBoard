@@ -1,15 +1,19 @@
 import { useDroppable } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import { Box, Typography, Paper } from '@mui/material'
+import { Box, Typography, Paper, IconButton, Tooltip } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import { useTranslation } from 'react-i18next'
 import { TaskCard } from '@/features/tasks/components/TaskCard'
 import type { BoardColumn, Task } from '@/types'
 
 interface KanbanColumnProps {
   column: BoardColumn
   tasks: Task[]
+  onAddTask?: (columnId: string) => void
 }
 
-export const KanbanColumn = ({ column, tasks }: KanbanColumnProps) => {
+export const KanbanColumn = ({ column, tasks, onAddTask }: KanbanColumnProps) => {
+  const { t } = useTranslation('pages')
   const { setNodeRef, isOver } = useDroppable({ id: column.id })
 
   return (
@@ -30,9 +34,18 @@ export const KanbanColumn = ({ column, tasks }: KanbanColumnProps) => {
         <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
           {column.title}
         </Typography>
-        <Typography variant="caption" color="text.secondary">
-          {tasks.length}
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+          <Typography variant="caption" color="text.secondary">
+            {tasks.length}
+          </Typography>
+          {onAddTask && (
+            <Tooltip title={t('addTask')}>
+              <IconButton size="small" onClick={() => onAddTask(column.id)}>
+                <AddIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Box>
       </Box>
 
       <SortableContext items={tasks.map((t) => t._id)} strategy={verticalListSortingStrategy}>

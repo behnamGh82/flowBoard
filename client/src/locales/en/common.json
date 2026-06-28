@@ -13,5 +13,6 @@
   "switchToDark": "Switch to dark mode",
   "switchToLight": "Switch to light mode",
   "logout": "Logout",
+  "cancel": "Cancel",
   "trendFromLastMonth": "+12% from last month"
 }

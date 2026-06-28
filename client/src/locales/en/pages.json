@@ -40,5 +40,22 @@
   "reportsEmptyTitle": "Reports coming soon",
   "reportsEmptyDescription": "Project velocity, burndown charts, and team metrics will appear here.",
   "noProjectsTitle": "No projects yet",
-  "noProjectsDescription": "Create your first project to start organizing work."
+  "noProjectsDescription": "Create your first project to start organizing work.",
+  "projectFormTitle": "Create Project",
+  "projectFormName": "Project Name",
+  "projectFormKey": "Project Key",
+  "projectFormKeyHint": "2–6 uppercase letters (e.g. FLW)",
+  "projectFormDescription": "Description",
+  "projectFormColor": "Color",
+  "projectFormSubmit": "Create Project",
+  "addTask": "Add task",
+  "taskFormTitle": "New Task",
+  "taskFormTitleLabel": "Title",
+  "taskFormDescription": "Description",
+  "taskFormPriority": "Priority",
+  "taskFormStoryPoints": "Story Points",
+  "taskFormLabels": "Labels",
+  "taskFormLabelsHint": "Comma-separated (e.g. ui, frontend)",
+  "taskFormDueDate": "Due Date",
+  "taskFormSubmit": "Create Task"
 }

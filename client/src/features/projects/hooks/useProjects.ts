@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { projectService } from '@/features/projects/services/project.service'
+import { boardKeys } from '@/features/boards/hooks/useBoards'
 import type { ProjectFormValues } from '@/features/projects/schemas/project.schema'
 
 export const projectKeys = {
@@ -26,7 +27,10 @@ export const useCreateProject = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (payload: ProjectFormValues) => projectService.create(payload),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: projectKeys.all }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: projectKeys.all })
+      queryClient.invalidateQueries({ queryKey: boardKeys.all })
+    },
   })
 }
 

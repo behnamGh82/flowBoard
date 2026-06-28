@@ -1,6 +1,6 @@
 import { apiClient } from '@/api/client'
 import type { ApiResponse, PaginatedResponse, Task } from '@/types'
-import type { TaskFormValues } from '@/features/tasks/schemas/task.schema'
+import type { CreateTaskPayload } from '@/features/tasks/schemas/task.schema'
 
 export const taskService = {
   getAll: async (params?: { board?: string; project?: string; page?: number }) => {
@@ -21,12 +21,12 @@ export const taskService = {
     return data.data
   },
 
-  create: async (payload: TaskFormValues) => {
+  create: async (payload: CreateTaskPayload) => {
     const { data } = await apiClient.post<ApiResponse<Task>>('/tasks', payload)
     return data.data
   },
 
-  update: async (id: string, payload: Partial<TaskFormValues>) => {
+  update: async (id: string, payload: Partial<CreateTaskPayload>) => {
     const { data } = await apiClient.put<ApiResponse<Task>>(`/tasks/${id}`, payload)
     return data.data
   },

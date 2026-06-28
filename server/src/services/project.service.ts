@@ -1,4 +1,4 @@
-import { Project } from '../models'
+import { Project, Board } from '../models'
 import { AppError } from '../middleware/error.middleware'
 import { paginate, paginatedResponse } from '../utils/helpers'
 import { activityService } from './activity.service'
@@ -46,6 +46,11 @@ export const projectService = {
       ...payload,
       owner: userId,
       members: [userId],
+    })
+
+    await Board.create({
+      name: 'Main Board',
+      project: project._id,
     })
 
     await activityService.record({

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { taskService } from '@/features/tasks/services/task.service'
-import type { TaskFormValues } from '@/features/tasks/schemas/task.schema'
+import type { CreateTaskPayload } from '@/features/tasks/schemas/task.schema'
 
 export const taskKeys = {
   all: ['tasks'] as const,
@@ -32,8 +32,11 @@ export const useTask = (id: string) =>
 export const useCreateTask = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (payload: TaskFormValues) => taskService.create(payload),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: taskKeys.all }),
+    mutationFn: (payload: CreateTaskPayload) => taskService.create(payload),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: taskKeys.all })
+      queryClient.invalidateQueries({ queryKey: taskKeys.byBoard(variables.board) })
+    },
   })
 }
 

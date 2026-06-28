@@ -6,6 +6,7 @@ import { LoadingScreen } from '@/components/ui/LoadingScreen'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { EmptyState } from '@/components/common/EmptyState'
 import { KanbanBoard } from '@/features/boards/components/KanbanBoard'
+import { TaskFormDialog } from '@/features/tasks/components/TaskFormDialog'
 import { useProjects } from '@/features/projects/hooks/useProjects'
 import { useBoardsByProject } from '@/features/boards/hooks/useBoards'
 import { useMoveTask, useTasksByBoard } from '@/features/tasks/hooks/useTasks'
@@ -16,6 +17,10 @@ export const BoardWorkspace = () => {
   const { data: projectsData, isLoading: projectsLoading, isError: projectsError, refetch } = useProjects()
   const [projectId, setProjectId] = useState('')
   const [boardId, setBoardId] = useState('')
+  const [taskDialog, setTaskDialog] = useState<{ open: boolean; columnId: string }>({
+    open: false,
+    columnId: 'backlog',
+  })
 
   const selectedProjectId = projectId || projectsData?.data[0]?._id || ''
   const { data: boards, isLoading: boardsLoading } = useBoardsByProject(selectedProjectId)
@@ -81,6 +86,15 @@ export const BoardWorkspace = () => {
         onTaskMove={(taskId, columnId, order) => {
           moveTask.mutate({ id: taskId, columnId, order })
         }}
+        onAddTask={(columnId) => setTaskDialog({ open: true, columnId })}
+      />
+
+      <TaskFormDialog
+        open={taskDialog.open}
+        onClose={() => setTaskDialog((prev) => ({ ...prev, open: false }))}
+        boardId={selectedBoardId}
+        projectId={selectedProjectId}
+        columnId={taskDialog.columnId}
       />
     </Stack>
   )
