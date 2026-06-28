@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { MenuItem, Stack } from '@mui/material'
+import { useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { AppInput } from '@/components/ui/AppInput'
 import { LoadingScreen } from '@/components/ui/LoadingScreen'
@@ -14,13 +15,22 @@ import { DEFAULT_BOARD_COLUMNS } from '@/constants/board'
 
 export const BoardWorkspace = () => {
   const { t } = useTranslation('pages')
+  const [searchParams] = useSearchParams()
+  const projectFromUrl = searchParams.get('project') ?? ''
   const { data: projectsData, isLoading: projectsLoading, isError: projectsError, refetch } = useProjects()
-  const [projectId, setProjectId] = useState('')
+  const [projectId, setProjectId] = useState(projectFromUrl)
   const [boardId, setBoardId] = useState('')
   const [taskDialog, setTaskDialog] = useState<{ open: boolean; columnId: string }>({
     open: false,
     columnId: 'backlog',
   })
+
+  useEffect(() => {
+    if (projectFromUrl) {
+      setProjectId(projectFromUrl)
+      setBoardId('')
+    }
+  }, [projectFromUrl])
 
   const selectedProjectId = projectId || projectsData?.data[0]?._id || ''
   const { data: boards, isLoading: boardsLoading } = useBoardsByProject(selectedProjectId)

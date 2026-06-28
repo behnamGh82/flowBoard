@@ -127,7 +127,12 @@ export const ProjectDetailsPage = () => {
             <Button variant="contained" startIcon={<EditOutlinedIcon />} onClick={() => setEditOpen(true)}>
               {t('pages:projectActionEdit')}
             </Button>
-            <Button variant="outlined" startIcon={<ViewKanbanOutlinedIcon />} component={Link} to="/boards">
+            <Button
+              variant="outlined"
+              startIcon={<ViewKanbanOutlinedIcon />}
+              component={Link}
+              to={`/boards?project=${project._id}`}
+            >
               {t('pages:projectOpenBoard')}
             </Button>
             <Button variant="outlined" startIcon={<ArchiveOutlinedIcon />} onClick={handleArchive}>
