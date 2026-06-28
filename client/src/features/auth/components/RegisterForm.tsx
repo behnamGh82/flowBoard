@@ -1,4 +1,12 @@
-import { Box, Button, TextField, Typography, Link as MuiLink, Alert } from '@mui/material'
+import {
+  Alert,
+  Box,
+  Button,
+  Link as MuiLink,
+  MenuItem,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, useNavigate } from 'react-router-dom'
@@ -15,10 +23,16 @@ export const RegisterForm = () => {
     formState: { errors },
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
-    defaultValues: { name: '', email: '', password: '', confirmPassword: '' },
+    defaultValues: {
+      name: '',
+      email: '',
+      role: 'developer',
+      password: '',
+      confirmPassword: '',
+    },
   })
 
-  const onSubmit = handleSubmit(async (values) => {
+  const onSubmit = handleSubmit(async (values: RegisterFormValues) => {
     const { confirmPassword: _, ...payload } = values
     await registerMutation.mutateAsync(payload)
     navigate('/dashboard')
@@ -56,6 +70,19 @@ export const RegisterForm = () => {
         error={!!errors.email}
         helperText={errors.email?.message}
       />
+      <TextField
+        {...register('role')}
+        select
+        label="Role"
+        fullWidth
+        margin="normal"
+        error={!!errors.role}
+        helperText={errors.role?.message}
+      >
+        <MenuItem value="developer">Developer</MenuItem>
+        <MenuItem value="project_manager">Project Manager</MenuItem>
+        <MenuItem value="admin">Admin</MenuItem>
+      </TextField>
       <TextField
         {...register('password')}
         label="Password"

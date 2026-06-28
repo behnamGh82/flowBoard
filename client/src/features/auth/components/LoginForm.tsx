@@ -57,6 +57,12 @@ export const LoginForm = () => {
         helperText={errors.password?.message}
       />
 
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
+        <MuiLink component={Link} to="/forgot-password" variant="body2">
+          Forgot password?
+        </MuiLink>
+      </Box>
+
       <Button
         type="submit"
         variant="contained"

@@ -1,6 +1,6 @@
 export type ThemeMode = 'light' | 'dark'
 
-export type UserRole = 'admin' | 'member' | 'viewer'
+export type UserRole = 'admin' | 'project_manager' | 'developer'
 
 export interface User {
   _id: string
@@ -115,5 +115,15 @@ export interface LoginCredentials {
 export interface RegisterCredentials {
   name: string
   email: string
+  password: string
+  role?: UserRole
+}
+
+export interface ForgotPasswordPayload {
+  email: string
+}
+
+export interface ResetPasswordPayload {
+  token: string
   password: string
 }

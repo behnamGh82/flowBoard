@@ -9,7 +9,7 @@ export interface AuthRequest extends Request {
   }
 }
 
-export type UserRole = 'admin' | 'member' | 'viewer'
+export type UserRole = 'admin' | 'project_manager' | 'developer'
 export type ProjectStatus = 'active' | 'archived' | 'on_hold'
 export type TaskPriority = 'lowest' | 'low' | 'medium' | 'high' | 'highest'
 export type TaskStatus = 'todo' | 'in_progress' | 'in_review' | 'done'
@@ -26,6 +26,8 @@ export interface IUser extends Document {
   password: string
   avatar?: string
   role: UserRole
+  passwordResetToken?: string
+  passwordResetExpires?: Date
   comparePassword(candidate: string): Promise<boolean>
   createdAt: Date
   updatedAt: Date

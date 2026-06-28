@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom'
 import { useThemeMode } from '@/contexts/ThemeContext'
 import { useAuthStore } from '@/contexts/authStore'
 import { getInitials } from '@/utils/helpers'
+import { roleLabels } from '@/features/auth/utils/roles'
 
 export const Header = () => {
   const { mode, toggleMode } = useThemeMode()
@@ -56,6 +57,9 @@ export const Header = () => {
               <Typography variant="subtitle2">{user.name}</Typography>
               <Typography variant="caption" color="text.secondary">
                 {user.email}
+              </Typography>
+              <Typography variant="caption" color="primary.main" sx={{ display: 'block', mt: 0.5 }}>
+                {roleLabels[user.role]}
               </Typography>
             </Box>
           )}

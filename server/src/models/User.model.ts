@@ -8,7 +8,13 @@ const userSchema = new Schema<IUser>(
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     password: { type: String, required: true, minlength: 6, select: false },
     avatar: { type: String },
-    role: { type: String, enum: ['admin', 'member', 'viewer'], default: 'member' },
+    role: {
+      type: String,
+      enum: ['admin', 'project_manager', 'developer'],
+      default: 'developer',
+    },
+    passwordResetToken: { type: String, select: false },
+    passwordResetExpires: { type: Date, select: false },
   },
   { timestamps: true },
 )

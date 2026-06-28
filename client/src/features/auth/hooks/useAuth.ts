@@ -1,7 +1,12 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { authService } from '@/features/auth/services/auth.service'
 import { useAuthStore } from '@/contexts/authStore'
-import type { LoginCredentials, RegisterCredentials } from '@/types'
+import type {
+  ForgotPasswordPayload,
+  LoginCredentials,
+  RegisterCredentials,
+  ResetPasswordPayload,
+} from '@/types'
 
 export const useLogin = () => {
   const { setUser, setToken } = useAuthStore()
@@ -36,3 +41,13 @@ export const useCurrentUser = () => {
     enabled: isAuthenticated,
   })
 }
+
+export const useForgotPassword = () =>
+  useMutation({
+    mutationFn: (payload: ForgotPasswordPayload) => authService.forgotPassword(payload),
+  })
+
+export const useResetPassword = () =>
+  useMutation({
+    mutationFn: (payload: ResetPasswordPayload) => authService.resetPassword(payload),
+  })
