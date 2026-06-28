@@ -1,0 +1,97 @@
+import { Request } from 'express'
+import { Document, Types } from 'mongoose'
+
+export interface AuthRequest extends Request {
+  user?: {
+    id: string
+    email: string
+    role: string
+  }
+}
+
+export type UserRole = 'admin' | 'member' | 'viewer'
+export type ProjectStatus = 'active' | 'archived' | 'on_hold'
+export type TaskPriority = 'lowest' | 'low' | 'medium' | 'high' | 'highest'
+export type TaskStatus = 'todo' | 'in_progress' | 'in_review' | 'done'
+export type NotificationType =
+  | 'task_assigned'
+  | 'task_updated'
+  | 'comment_added'
+  | 'project_invite'
+
+export interface IUser extends Document {
+  _id: Types.ObjectId
+  name: string
+  email: string
+  password: string
+  avatar?: string
+  role: UserRole
+  comparePassword(candidate: string): Promise<boolean>
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface IProject extends Document {
+  _id: Types.ObjectId
+  name: string
+  key: string
+  description?: string
+  status: ProjectStatus
+  owner: Types.ObjectId
+  members: Types.ObjectId[]
+  color?: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface IBoardColumn {
+  id: string
+  title: string
+  order: number
+}
+
+export interface IBoard extends Document {
+  _id: Types.ObjectId
+  name: string
+  project: Types.ObjectId
+  columns: IBoardColumn[]
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface ITask extends Document {
+  _id: Types.ObjectId
+  title: string
+  description?: string
+  status: TaskStatus
+  priority: TaskPriority
+  board: Types.ObjectId
+  project: Types.ObjectId
+  columnId: string
+  order: number
+  assignee?: Types.ObjectId
+  reporter: Types.ObjectId
+  labels: string[]
+  dueDate?: Date
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface IComment extends Document {
+  _id: Types.ObjectId
+  content: string
+  task: Types.ObjectId
+  author: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface INotification extends Document {
+  _id: Types.ObjectId
+  type: NotificationType
+  message: string
+  read: boolean
+  recipient: Types.ObjectId
+  metadata?: Record<string, unknown>
+  createdAt: Date
+}

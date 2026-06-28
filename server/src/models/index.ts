@@ -1,0 +1,6 @@
+export { User } from './User.model'
+export { Project } from './Project.model'
+export { Board } from './Board.model'
+export { Task } from './Task.model'
+export { Comment } from './Comment.model'
+export { Notification } from './Notification.model'

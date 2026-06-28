@@ -1,0 +1,13 @@
+{
+  "name": "flowboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Project management app inspired by Jira and Trello",
+  "scripts": {
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "build:client": "npm run build --prefix client",
+    "build:server": "npm run build --prefix server",
+    "build": "npm run build:server && npm run build:client"
+  }
+}
