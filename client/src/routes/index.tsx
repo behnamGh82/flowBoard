@@ -11,6 +11,9 @@ const DashboardPage = lazy(() =>
 const ProjectsPage = lazy(() =>
   import('@/pages/ProjectsPage').then((m) => ({ default: m.ProjectsPage })),
 )
+const ProjectDetailsPage = lazy(() =>
+  import('@/pages/ProjectDetailsPage').then((m) => ({ default: m.ProjectDetailsPage })),
+)
 const BoardsPage = lazy(() =>
   import('@/pages/BoardsPage').then((m) => ({ default: m.BoardsPage })),
 )
@@ -73,6 +76,14 @@ export const router = createBrowserRouter([
             element: (
               <ProtectedRoute allowedRoles={routePermissions.management}>
                 {withSuspense(<ProjectsPage />)}
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: 'projects/:id',
+            element: (
+              <ProtectedRoute allowedRoles={routePermissions.management}>
+                {withSuspense(<ProjectDetailsPage />)}
               </ProtectedRoute>
             ),
           },

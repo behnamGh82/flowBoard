@@ -10,7 +10,9 @@ export interface AuthRequest extends Request {
 }
 
 export type UserRole = 'admin' | 'project_manager' | 'developer'
-export type ProjectStatus = 'active' | 'archived' | 'on_hold'
+export type ProjectStatus = 'planning' | 'active' | 'on_hold' | 'completed' | 'archived'
+export type ProjectVisibility = 'private' | 'team' | 'public'
+export type ProjectPriority = 'low' | 'medium' | 'high'
 export type TaskPriority = 'lowest' | 'low' | 'medium' | 'high' | 'highest'
 export type TaskStatus = 'backlog' | 'todo' | 'in_progress' | 'in_review' | 'done'
 
@@ -63,6 +65,12 @@ export interface IProject extends Document {
   key: string
   description?: string
   status: ProjectStatus
+  priority: ProjectPriority
+  visibility: ProjectVisibility
+  icon?: string
+  startDate?: Date
+  deadline?: Date
+  coverImage?: string
   owner: Types.ObjectId
   members: Types.ObjectId[]
   color?: string

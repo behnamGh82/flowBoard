@@ -1,16 +1,3 @@
-export const PROJECT_COLOR_PRESETS = [
-  '#4F46E5',
-  '#059669',
-  '#DC2626',
-  '#D97706',
-  '#7C3AED',
-  '#0891B2',
-  '#DB2777',
-  '#64748B',
-] as const
-
-export const DEFAULT_PROJECT_COLOR = PROJECT_COLOR_PRESETS[0]
-
 export const PROJECT_STATUSES = [
   'planning',
   'active',
@@ -28,17 +15,3 @@ export const PROJECT_SORT_FIELDS = ['createdAt', 'updatedAt', 'deadline', 'name'
 export const PROJECT_ICON_PRESETS = ['📋', '🚀', '💡', '🎯', '⚡', '🔧', '📱', '🌐', '🎨', '📊'] as const
 
 export const DEFAULT_PROJECT_ICON = PROJECT_ICON_PRESETS[0]
-
-export type ProjectViewMode = 'grid' | 'table'
-
-export type ProjectSortField = (typeof PROJECT_SORT_FIELDS)[number]
-
-export interface ProjectListParams {
-  page?: number
-  search?: string
-  status?: string
-  owner?: string
-  member?: string
-  sortBy?: ProjectSortField
-  sortOrder?: 'asc' | 'desc'
-}

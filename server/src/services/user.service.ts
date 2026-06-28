@@ -20,4 +20,17 @@ export const userService = {
     if (!user) throw new AppError('User not found', 404)
     return user
   },
+
+  getOptions: async (search?: string, limit = 20) => {
+    const filter = search
+      ? {
+          $or: [
+            { name: { $regex: search, $options: 'i' } },
+            { email: { $regex: search, $options: 'i' } },
+          ],
+        }
+      : {}
+
+    return User.find(filter).select('name email avatar role').limit(limit).sort({ name: 1 })
+  },
 }

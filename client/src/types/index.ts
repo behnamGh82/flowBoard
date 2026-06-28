@@ -14,7 +14,9 @@ export interface User {
   updatedAt: string
 }
 
-export type ProjectStatus = 'active' | 'archived' | 'on_hold'
+export type ProjectStatus = 'planning' | 'active' | 'on_hold' | 'completed' | 'archived'
+export type ProjectVisibility = 'private' | 'team' | 'public'
+export type ProjectPriority = 'low' | 'medium' | 'high'
 
 export interface Project {
   _id: string
@@ -22,9 +24,17 @@ export interface Project {
   key: string
   description?: string
   status: ProjectStatus
+  priority: ProjectPriority
+  visibility: ProjectVisibility
+  icon?: string
+  startDate?: string
+  deadline?: string
+  coverImage?: string
   owner: User | string
   members: User[] | string[]
   color?: string
+  totalTasks?: number
+  completedTasks?: number
   createdAt: string
   updatedAt: string
 }

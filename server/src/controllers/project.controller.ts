@@ -7,13 +7,17 @@ import type { AuthRequest } from '../types'
 export const projectController = {
   getAll: async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      const { search, page, limit } = req.query
-      const result = await projectService.getAll(
-        req,
-        search as string | undefined,
-        Number(page) || 1,
-        Number(limit) || 20,
-      )
+      const { search, status, owner, member, sortBy, sortOrder, page, limit } = req.query
+      const result = await projectService.getAll(req, {
+        search: search as string | undefined,
+        status: status as string | undefined,
+        owner: owner as string | undefined,
+        member: member as string | undefined,
+        sortBy: sortBy as string | undefined,
+        sortOrder: (sortOrder as 'asc' | 'desc') || 'desc',
+        page: Number(page) || 1,
+        limit: Number(limit) || 50,
+      })
       sendSuccess(res, result)
     } catch (error) {
       next(error)
@@ -42,6 +46,24 @@ export const projectController = {
     try {
       const project = await projectService.update(getParam(req.params.id), req.user!.id, req.body)
       sendSuccess(res, project)
+    } catch (error) {
+      next(error)
+    }
+  },
+
+  archive: async (req: AuthRequest, res: Response, next: NextFunction) => {
+    try {
+      const project = await projectService.archive(getParam(req.params.id), req.user!.id)
+      sendSuccess(res, project)
+    } catch (error) {
+      next(error)
+    }
+  },
+
+  duplicate: async (req: AuthRequest, res: Response, next: NextFunction) => {
+    try {
+      const project = await projectService.duplicate(getParam(req.params.id), req.user!.id)
+      sendSuccess(res, project, 201)
     } catch (error) {
       next(error)
     }

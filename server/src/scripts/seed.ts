@@ -38,8 +38,13 @@ interface ProjectSeedDef {
   name: string
   key: string
   description: string
-  status: 'active' | 'archived' | 'on_hold'
+  status: 'planning' | 'active' | 'on_hold' | 'completed' | 'archived'
+  priority: 'low' | 'medium' | 'high'
+  visibility: 'private' | 'team' | 'public'
+  icon: string
   color: string
+  startDate?: Date
+  deadline?: Date
   owner: mongoose.Types.ObjectId
   members: mongoose.Types.ObjectId[]
   tasks: TaskSeedDef[]
@@ -93,7 +98,12 @@ const seed = async () => {
       key: 'FLW',
       description: 'Core project management platform with Kanban, dashboard, and team collaboration.',
       status: 'active' as const,
+      priority: 'high' as const,
+      visibility: 'team' as const,
+      icon: '🚀',
       color: '#4F46E5',
+      startDate: daysFromNow(-30),
+      deadline: daysFromNow(45),
       owner: admin._id,
       members: [admin._id, pm._id, dev1._id, dev2._id],
       tasks: [
@@ -151,7 +161,12 @@ const seed = async () => {
       key: 'MOB',
       description: 'Cross-platform mobile companion app for FlowBoard.',
       status: 'active' as const,
+      priority: 'medium' as const,
+      visibility: 'team' as const,
+      icon: '📱',
       color: '#059669',
+      startDate: daysFromNow(-14),
+      deadline: daysFromNow(60),
       owner: pm._id,
       members: [pm._id, dev1._id, dev2._id],
       tasks: [
@@ -188,7 +203,12 @@ const seed = async () => {
       key: 'API',
       description: 'Centralized API gateway for microservices routing and rate limiting.',
       status: 'on_hold' as const,
+      priority: 'low' as const,
+      visibility: 'private' as const,
+      icon: '🔧',
       color: '#DC2626',
+      startDate: daysFromNow(-7),
+      deadline: daysFromNow(90),
       owner: admin._id,
       members: [admin._id, dev1._id],
       tasks: [
@@ -217,7 +237,12 @@ const seed = async () => {
       key: def.key,
       description: def.description,
       status: def.status,
+      priority: def.priority,
+      visibility: def.visibility,
+      icon: def.icon,
       color: def.color,
+      startDate: def.startDate,
+      deadline: def.deadline,
       owner: def.owner,
       members: def.members,
     })

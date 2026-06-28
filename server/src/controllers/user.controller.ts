@@ -27,4 +27,17 @@ export const userController = {
       next(error)
     }
   },
+
+  getOptions: async (req: AuthRequest, res: Response, next: NextFunction) => {
+    try {
+      const { search, limit } = req.query
+      const users = await userService.getOptions(
+        search as string | undefined,
+        Number(limit) || 20,
+      )
+      sendSuccess(res, users)
+    } catch (error) {
+      next(error)
+    }
+  },
 }

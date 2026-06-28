@@ -14,4 +14,9 @@ export const userService = {
     const { data } = await apiClient.get<ApiResponse<User>>(`/users/${id}`)
     return data.data
   },
+
+  getOptions: async (params?: { search?: string; limit?: number }) => {
+    const { data } = await apiClient.get<ApiResponse<User[]>>('/users/options', { params })
+    return data.data
+  },
 }

@@ -6,6 +6,7 @@ import { ROLE_GROUPS } from '../constants/roles'
 const router = Router()
 
 router.use(authenticate)
+router.get('/options', authorize(...ROLE_GROUPS.MANAGEMENT), userController.getOptions)
 router.get('/', authorize(...ROLE_GROUPS.ADMIN_ONLY), userController.getAll)
 router.get('/:id', authorize(...ROLE_GROUPS.ADMIN_ONLY), userController.getById)
 

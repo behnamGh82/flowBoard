@@ -1,16 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { projectService } from '@/features/projects/services/project.service'
 import { boardKeys } from '@/features/boards/hooks/useBoards'
+import type { ProjectListParams } from '@/constants/project'
 import type { ProjectFormValues } from '@/features/projects/schemas/project.schema'
 
 export const projectKeys = {
   all: ['projects'] as const,
-  list: (params?: { page?: number; search?: string }) =>
-    [...projectKeys.all, 'list', params] as const,
+  list: (params?: ProjectListParams) => [...projectKeys.all, 'list', params] as const,
   detail: (id: string) => [...projectKeys.all, 'detail', id] as const,
 }
 
-export const useProjects = (params?: { page?: number; search?: string }) =>
+export const useProjects = (params?: ProjectListParams) =>
   useQuery({
     queryKey: projectKeys.list(params),
     queryFn: () => projectService.getAll(params),
@@ -46,10 +46,32 @@ export const useUpdateProject = () => {
   })
 }
 
+export const useArchiveProject = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => projectService.archive(id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: projectKeys.all }),
+  })
+}
+
+export const useDuplicateProject = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => projectService.duplicate(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: projectKeys.all })
+      queryClient.invalidateQueries({ queryKey: boardKeys.all })
+    },
+  })
+}
+
 export const useDeleteProject = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (id: string) => projectService.delete(id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: projectKeys.all }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: projectKeys.all })
+      queryClient.invalidateQueries({ queryKey: boardKeys.all })
+    },
   })
 }
